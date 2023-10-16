@@ -1,4 +1,17 @@
 package com.chiuxah.weather
 
-class MyApplication {
+import android.app.Application
+import android.content.Context
+
+class MyApplication : Application() {
+    companion object {
+        const val mytoken = "trDGvpGzgEqdkU0a"
+
+        lateinit var context : Context
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        context = applicationContext
+    }
 }
