@@ -1,7 +1,6 @@
 package com.chiuxah.weather.ui.place
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,13 +26,13 @@ class MyAdapter(private val fragment: PlaceFragment, private val placeList: List
             val place = placeList[position]
 
             val it = Intent(parent.context,WeatherActivity::class.java).apply {
-                putExtra("经度","118.759127")//发送数据到WA
+                putExtra("经度","118.759127")//发送数据到WA//目前有bug
                 putExtra("纬度","30.939278")
                 putExtra("位置",place.name)
             }
           // Log.d("发送数据测试","${place.location.weidu}")
            // Log.d("发送数据测试","${place.location.jingdu}")
-            Log.d("发送数据测试","${place.name}")
+            //Log.d("发送数据测试","${place.name}")
             fragment.startActivity(it)
             fragment.activity?.finish()
         }

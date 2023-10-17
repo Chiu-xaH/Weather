@@ -1,6 +1,7 @@
 package com.chiuxah.weather.logic.model
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.datetime.*
 import java.sql.Date
 
 data class DailyResponse(val status: String, val result: Result) {
@@ -9,6 +10,10 @@ data class DailyResponse(val status: String, val result: Result) {
                      @SerializedName("life_index") val lifeIndex: LifeIndex)
     data class Temperature(val max : Float, val min: Float)
     data class Skycon(val value: String, val date: Date)
+
+
+
+
     data class LifeIndex(val coldRisk: List<LifeDescription>, val carWashing:
     List<LifeDescription>, val ultraviolet: List<LifeDescription>,
                          val dressing: List<LifeDescription>)
