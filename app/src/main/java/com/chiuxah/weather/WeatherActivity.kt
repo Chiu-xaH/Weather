@@ -32,9 +32,11 @@ class WeatherActivity : AppCompatActivity() {
         if(vm.jingdu.isEmpty()) vm.jingdu = intent.getStringExtra("经度") ?: ""
         if(vm.weidu.isEmpty()) vm.weidu = intent.getStringExtra("纬度") ?: ""
         if(vm.placename.isEmpty()) vm.placename = intent.getStringExtra("位置") ?: ""
-       // Log.d("接收数据测试","${vm.weidu}")
+
+        //Log.d("接收数据测试","${vm.weidu}")
        // Log.d("接收数据测试","${vm.jingdu}")
-      //  Log.d("接收数据测试","${vm.placename}")
+        //Log.d("接收数据测试","${vm.placename}")
+
         //与适配器那里的putExtra下相对应，这里是接收端
         if (vm.jingdu.isNotEmpty() && vm.weidu.isNotEmpty()) {
             vm.refreshWeather(vm.jingdu,vm.weidu)
@@ -106,8 +108,9 @@ class WeatherActivity : AppCompatActivity() {
                 .format(weather?.daily?.skycon[i].date)//固定写法呗，我又大开眼界了🐎的
 
             skyIcon?.setImageResource(getSky(weather?.daily?.skycon[i].value).icon)
-            skyInfo?.text = "${getSky(weather?.daily?.skycon[i].value).info}"
+            skyInfo?.text = getSky(weather?.daily?.skycon[i].value).info
             temparetureInfo?.text = "${weather?.daily?.temperature!![i]?.min} 摄氏度 ~ ${weather?.daily?.temperature!![i]?.max} 摄氏度"
+            forecastLayout.addView(view)
         }
 
         //加载控件id---shenghuozhishu.xml

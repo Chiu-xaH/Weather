@@ -3,7 +3,7 @@ package com.chiuxah.weather
 import android.app.Application
 import android.content.Context
 
-class MyApplication : Application() {
+open class MyApplication : Application() {
     companion object {
         const val mytoken = "trDGvpGzgEqdkU0a"
 

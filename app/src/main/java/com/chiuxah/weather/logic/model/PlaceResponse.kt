@@ -6,4 +6,4 @@ data class PlaceResponse(val status : String,val places : List<Place>)
 
 data class Place(val name : String,val location : Location,@SerializedName("formatted_address") val address : String)//搜索出来的地区名字，经纬度（由下面定义）
 
-data class Location(val jingdu : String,val weidu : String)//经度，纬度
+data class Location(@SerializedName("lng") val jingdu : String,@SerializedName("lat") val weidu : String)//经度，纬度

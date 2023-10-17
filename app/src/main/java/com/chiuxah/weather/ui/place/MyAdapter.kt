@@ -19,6 +19,18 @@ class MyAdapter(private val fragment: PlaceFragment, private val placeList: List
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.place_item,
             parent, false)
+
+
+        //if (fragment.vm.isPlaceSaved()) {
+          //  val intent = Intent(context, WeatherActivity::class.java).apply {
+              //  putExtra("经度", "117")
+              //  putExtra("纬度", "30")
+              //  putExtra("位置", "宣城")//记得修改！！
+           // }
+          //  startActivity(intent)
+          // fragment.activity?.finish()
+          //  return
+      //  }
         //列表点击事件
         val holder = ViewHolder(view)//固定写法吧也许，我都忘了。。。。
         holder.itemView.setOnClickListener {
@@ -26,13 +38,15 @@ class MyAdapter(private val fragment: PlaceFragment, private val placeList: List
             val place = placeList[position]
 
             val it = Intent(parent.context,WeatherActivity::class.java).apply {
-                putExtra("经度","118.759127")//发送数据到WA//目前有bug
-                putExtra("纬度","30.939278")
+                putExtra("经度",place.location.jingdu)//发送数据到WA//目前有bug
+                putExtra("纬度",place.location.weidu)
                 putExtra("位置",place.name)
             }
-          // Log.d("发送数据测试","${place.location.weidu}")
+            //Log.d("发送数据测试","${place.location.weidu}")
            // Log.d("发送数据测试","${place.location.jingdu}")
-            //Log.d("发送数据测试","${place.name}")
+           // Log.d("发送数据测试","${place.name}")
+
+          //  fragment.vm.savePlace(place)
             fragment.startActivity(it)
             fragment.activity?.finish()
         }

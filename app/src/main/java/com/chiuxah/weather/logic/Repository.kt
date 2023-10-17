@@ -1,9 +1,7 @@
 package com.chiuxah.weather.logic
 
-import androidx.lifecycle.LiveDataScope
 import androidx.lifecycle.liveData
 import com.chiuxah.weather.logic.model.PlaceResponse
-import com.chiuxah.weather.logic.model.RealtimeResponse
 import com.chiuxah.weather.logic.model.Weather
 import com.chiuxah.weather.logic.network.NetWork
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +11,12 @@ import kotlinx.coroutines.coroutineScope
 
 object Repository {
     //D。。。。IO为线程参数，是协程知识点
-    //
+
+    //统一把PlaceDao的用法引用过来，也可以随用随引，甚至可以写在一起。。。。
+    //fun savePlace(place: Place) = PlaceDao.save(place)
+    //fun getSavedPlace() = PlaceDao.get()
+   // fun isPlaceSaved() = PlaceDao.ifSaved()
+
     fun searchCity(query : String) = liveData(Dispatchers.IO) {
         val result = try {
             val placeResponse : PlaceResponse= NetWork.searchCities(query)
