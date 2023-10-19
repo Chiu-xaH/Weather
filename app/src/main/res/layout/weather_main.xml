@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/weatherLayout"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="none"
-    android:overScrollMode="never"
-    android:visibility="invisible">
+    android:layout_width="match_parent"
+    android:id="@+id/sw"
+    >
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
+
+        android:id="@+id/weatherLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        android:visibility="invisible">
 
-        <include layout="@layout/dangqian" />
-        <include layout="@layout/yubao" />
-        <include layout="@layout/shenghuozhishu" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
-</ScrollView>
+            <include layout="@layout/dangqian" />
+            <include layout="@layout/yubao" />
+            <include layout="@layout/shenghuozhishu" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

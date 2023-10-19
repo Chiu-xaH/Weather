@@ -1,5 +1,6 @@
 package com.chiuxah.weather
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
     val vm by lazy { ViewModelProvider(this).get(WeatherViewModel::class.java) }
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.weather_main)
@@ -42,7 +44,7 @@ class WeatherActivity : AppCompatActivity() {
             vm.refreshWeather(vm.jingdu,vm.weidu)
         } else { Toast.makeText(this,"经纬度无效",Toast.LENGTH_SHORT).show() }
 
-
+        val swipeRefreshLayout : androidx.swiperefreshlayout.widget.SwipeRefreshLayout = findViewById(R.id.sw) //刷新控件
         //Log.d("测试","断点2")
         vm.weatherLiveData.observe(this,Observer { result ->
             //Log.d("测试","断点C")
@@ -62,16 +64,33 @@ class WeatherActivity : AppCompatActivity() {
                    // Log.d("测试","断点Q")
                // Log.d("测试","${result.exceptionOrNull()?.printStackTrace()}")
             }
+            swipeRefreshLayout.isRefreshing = false
         })
        // Log.d("测试","断点F")
 
+        swipeRefreshLayout.setColorSchemeColors(R.color.purple_700)
+        Refresh()
+        swipeRefreshLayout.setOnRefreshListener{
+            Refresh()
+            Toast.makeText(this,"刷新成功",Toast.LENGTH_SHORT).show()
+        }//刷新操作对应控件
+
+
         vm.refreshWeather(vm.jingdu,vm.weidu)
                 }
+//刷新定义操作
+    private fun Refresh() {
+        vm.refreshWeather(vm.jingdu,vm.weidu)
+        val swipeRefreshLayout : androidx.swiperefreshlayout.widget.SwipeRefreshLayout = findViewById(R.id.sw) //刷新控件
+        swipeRefreshLayout.isRefreshing = true
+    }
+
 
     private fun ssshow(weather: Weather?) {
         //把数据获取并显示到相应控件上,啊啊这么多数据啊
 
         //加载控件id---dangqian.xml
+
         val placeName : TextView = findViewById(R.id.placeName)
         val currentTemp : TextView = findViewById(R.id.currentTemp)
         val currentSky : TextView = findViewById(R.id.currentSky)
@@ -82,7 +101,7 @@ class WeatherActivity : AppCompatActivity() {
         placeName.text = vm.placename
         weather?.realtime?.skycon?.let { getSky(it).bg }
             ?.let { nowLayout.setBackgroundResource(it) }
-        currentTemp.text = "${weather?.realtime?.temperature?.toInt()} 摄氏度"
+        currentTemp.text = "${weather?.realtime?.temperature?.toInt()} ℃"
         currentSky.text = weather?.realtime?.skycon?.let { getSky(it).info }//这个是啥啊，不懂
         currentAQI.text = "空气指数 ${weather?.realtime?.airQuality?.aqi?.chn?.toInt()}"
         //一连串都在数据模型里定义好了
@@ -109,7 +128,7 @@ class WeatherActivity : AppCompatActivity() {
 
             skyIcon?.setImageResource(getSky(weather?.daily?.skycon[i].value).icon)
             skyInfo?.text = getSky(weather?.daily?.skycon[i].value).info
-            temparetureInfo?.text = "${weather?.daily?.temperature!![i]?.min} 摄氏度 ~ ${weather?.daily?.temperature!![i]?.max} 摄氏度"
+            temparetureInfo?.text = "${weather?.daily?.temperature!![i]?.min} ℃ ~ ${weather?.daily?.temperature!![i]?.max} ℃"
             forecastLayout.addView(view)
         }
 
