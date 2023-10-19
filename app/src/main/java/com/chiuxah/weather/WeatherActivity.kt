@@ -1,10 +1,13 @@
 package com.chiuxah.weather
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
@@ -12,6 +15,8 @@ import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.chiuxah.weather.logic.model.Weather
@@ -45,7 +50,32 @@ class WeatherActivity : AppCompatActivity() {
         } else { Toast.makeText(this,"经纬度无效",Toast.LENGTH_SHORT).show() }
 
         val swipeRefreshLayout : androidx.swiperefreshlayout.widget.SwipeRefreshLayout = findViewById(R.id.sw) //刷新控件
+        val dangqian_b : Button = findViewById(R.id.dangqian_b)//定义按钮控件
+        val dl : androidx.drawerlayout.widget.DrawerLayout = findViewById(R.id.dl)
         //Log.d("测试","断点2")
+        //打开滑动菜单，openDrawer
+        dangqian_b.setOnClickListener { dl.openDrawer(GravityCompat.START)}
+
+        //监听侧边栏状态
+        dl.addDrawerListener(//固定写法，都要重写
+            object : DrawerLayout.DrawerListener {
+
+            override fun onDrawerStateChanged(newState: Int) {}
+
+            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+
+            override fun onDrawerOpened(drawerView: View) {}
+
+            override fun onDrawerClosed(drawerView: View) { //侧边栏隐藏时要隐藏输入法
+                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                manager.hideSoftInputFromWindow(drawerView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            }
+
+          }
+        )
+
+
+
         vm.weatherLiveData.observe(this,Observer { result ->
             //Log.d("测试","断点C")
             val weather = result.getOrNull()
@@ -79,7 +109,7 @@ class WeatherActivity : AppCompatActivity() {
         vm.refreshWeather(vm.jingdu,vm.weidu)
                 }
 //刷新定义操作
-    private fun Refresh() {
+     fun Refresh() {
         vm.refreshWeather(vm.jingdu,vm.weidu)
         val swipeRefreshLayout : androidx.swiperefreshlayout.widget.SwipeRefreshLayout = findViewById(R.id.sw) //刷新控件
         swipeRefreshLayout.isRefreshing = true

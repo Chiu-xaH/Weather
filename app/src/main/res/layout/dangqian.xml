@@ -9,6 +9,15 @@
         android:id="@+id/titleLayout"
         android:layout_width="match_parent"
         android:layout_height="70dp">
+
+        <Button
+            android:id="@+id/dangqian_b"
+            android:layout_width="54dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/ic_home" />
+
         <TextView
             android:id="@+id/placeName"
             android:layout_width="wrap_content"
